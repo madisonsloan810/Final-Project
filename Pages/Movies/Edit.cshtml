@@ -1,0 +1,24 @@
+@page
+@model Final_Project.Pages.Movies.CreateModel
+
+<h2>Edit Movie</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Movie.Title"></label>
+        <input asp-for="Movie.Title" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Movie.Summary"></label>
+        <textarea asp-for="Movie.Summary" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Movie.ReleaseYear"></label>
+        <input asp-for="Movie.ReleaseYear" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Movie.PosterUrl"></label>
+        <input asp-for="Movie.PosterUrl" class="form-control" />
+    </div>
+    <button class="btn btn-success">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>

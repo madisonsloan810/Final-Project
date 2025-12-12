@@ -1,0 +1,26 @@
+@page
+@model Final_Project.Pages.Movies.DetailsModel
+
+<h2>@Model.Movie.Title (@Model.Movie.ReleaseYear)</h2>
+<p>@Model.Movie.Summary</p>
+<h4>Ratings</h4>
+@if (!Model.Movie.Ratings.Any())
+{
+    <p>No ratings yet.</p>
+}
+else
+{
+    <ul>
+    @foreach (var r in Model.Movie.Ratings)
+    {
+        <li><strong>@r.Score</strong> – @r.ReviewText</li>
+    }
+    </ul>
+}
+<a class="btn btn-success"
+   asp-page="/Ratings/Create"
+   asp-route-movieId="@Model.Movie.MovieID">
+   Add Rating
+</a>
+<a asp-page="Index" class="btn btn-secondary">Back</a>
+<!--I honestly couldn't figure out how to resolve this null warning-->

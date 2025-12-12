@@ -1,0 +1,66 @@
+﻿@page
+@model Final_Project.Pages.IndexModel
+
+<h1>EGGY Movies</h1>
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-6">
+    <input class="form-control" name="searchString" value="@Model.SearchString" placeholder="Search title..." />
+  </div> <!--I had to look up how to create this search bar for the movies-->
+  <div class="col-md-4">
+    <select class="form-select" name="sortOrder">
+      <option value="">Title (A–Z)</option>
+      <option value="title_desc">Title (Z–A)</option>
+      <option value="rating">Rating ↑</option>
+      <option value="rating_desc">Rating ↓</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-primary w-100">Apply</button>
+  </div>
+</form>
+@foreach (var m in Model.Movies)
+{
+    double avg = m.Ratings.Any() ? m.Ratings.Average(r => r.Score) : 0;
+    int full = (int)Math.Floor(avg); //ran into issues with this because avg was not defined. thats what the line above is for
+    bool half = avg - full > 0;
+    int empty = 5 - full - (half ? 1 : 0);
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2">
+            <img src="@m.PosterUrl" class="img-fluid rounded" />
+          </div>
+          <div class="col-md-8">
+            <h4>@m.Title (@m.ReleaseYear)</h4>
+            <p>@m.Summary</p>
+            <p>
+              @for (int i = 0; i < full; i++) { <i class="bi bi-egg-fill"></i> }
+              @if (half) { <i class="bi bi-egg-fried"></i> }
+              @for (int i = 0; i < empty; i++) { <i class="bi bi-egg"></i> } 
+              <span>@avg.ToString("0.0")</span>
+            </p>
+          </div>
+          <div class="col-md-2">
+            <a class="btn btn-success w-100 mb-2"
+               asp-page="/Ratings/Create"
+               asp-route-movieId="@m.MovieID">Add Rating</a>
+            <button class="btn btn-primary w-100"
+                    data-bs-toggle="collapse"
+                    data-bs-target="@("#r"+m.MovieID)">
+              Show Ratings
+            </button>
+          </div>
+        </div>
+
+        <div class="collapse mt-2" id="@("r"+m.MovieID)">
+          @foreach (var r in m.Ratings)
+          {
+              <div class="border-top pt-1">
+                <strong>@r.Score</strong> – @r.ReviewText
+              </div>
+          }
+        </div>
+      </div>
+    </div>
+}

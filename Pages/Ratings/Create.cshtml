@@ -1,0 +1,18 @@
+@page
+@model Final_Project.Pages.Ratings.CreateModel
+<h2>Add Rating</h2>
+<form method="post">
+  <div class="mb-3">
+    <label asp-for="Rating.MovieID"></label>
+    <select asp-for="Rating.MovieID" asp-items="Model.MovieList" class="form-select"></select>
+  </div>
+  <div class="mb-3">
+    <label asp-for="Rating.Score"></label>
+    <input asp-for="Rating.Score" class="form-control" />
+  </div>
+  <div class="mb-3">
+    <label asp-for="Rating.ReviewText"></label>
+    <textarea asp-for="Rating.ReviewText" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-success">Save</button>
+</form>
